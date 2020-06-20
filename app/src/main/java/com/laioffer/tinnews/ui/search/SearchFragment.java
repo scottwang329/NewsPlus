@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.util.Log;
@@ -15,9 +16,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.laioffer.tinnews.R;
 import com.laioffer.tinnews.databinding.FragmentSearchBinding;
+import com.laioffer.tinnews.model.Article;
 import com.laioffer.tinnews.repository.NewsRepository;
 import com.laioffer.tinnews.repository.NewsViewModelFactory;
 
@@ -47,12 +50,25 @@ public class SearchFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         SearchNewsAdapter newsAdapter = new SearchNewsAdapter();
+        newsAdapter.setLikeListener(new SearchNewsAdapter.LikeListener() {
+            @Override
+            public void onLike(Article article) {
+                viewModel.setFavoriteArticleInput(article);
+            }
+
+            @Override
+            public void onClick(Article article) {
+                SearchFragmentDirections.ActionTitleSearchToDetail actionTitleSearchToDetail = SearchFragmentDirections.actionTitleSearchToDetail();
+                actionTitleSearchToDetail.setArticle(article);
+                NavHostFragment.findNavController(SearchFragment.this).navigate(actionTitleSearchToDetail);
+            }
+        });
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         gridLayoutManager.setSpanSizeLookup(
                 new GridLayoutManager.SpanSizeLookup() {
                     @Override
                     public int getSpanSize(int position) {
-                        return position % 10 == 0 ? 2 : 1;
+                        return position % 9 == 0 ? 2 : 1;
                     }
                 }
         );
@@ -81,10 +97,20 @@ public class SearchFragment extends Fragment {
                 newsAdapter.setArticles(newsResponse.articles);
             }
         });
+
+        viewModel.onFavorite().observe(getViewLifecycleOwner(), isSuccess -> {
+            if (isSuccess) {
+                Toast.makeText(requireActivity(), "Success", Toast.LENGTH_SHORT).show();
+                newsAdapter.notifyDataSetChanged();
+            } else {
+                Toast.makeText(requireActivity(), "You might have liked before", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        viewModel.onCancel();
     }
 }

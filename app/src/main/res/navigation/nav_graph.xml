@@ -22,6 +22,12 @@
             app:destination="@+id/navigation_detail"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right">
+
+            <argument
+                android:name="article"
+                android:defaultValue="@null"
+                app:argType="com.laioffer.tinnews.model.Article"
+                app:nullable="true" />
         </action>
     </fragment>
 
@@ -36,6 +42,11 @@
             app:destination="@+id/navigation_detail"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right">
+            <argument
+                android:name="article"
+                android:defaultValue="@null"
+                app:argType="com.laioffer.tinnews.model.Article"
+                app:nullable="true" />
         </action>
     </fragment>
 
@@ -43,7 +54,13 @@
         android:id="@+id/navigation_detail"
         android:name="com.laioffer.tinnews.ui.detail.SavedNewsDetailFragment"
         android:label="@string/title_detail"
-        tools:layout="@layout/fragment_saved_news_detail" />
+        tools:layout="@layout/fragment_saved_news_detail">
+        <argument
+            android:name="article"
+            android:defaultValue="@null"
+            app:argType="com.laioffer.tinnews.model.Article"
+            app:nullable="true" />
+    </fragment>
 
 
 </navigation>

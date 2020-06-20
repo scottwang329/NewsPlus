@@ -19,6 +19,8 @@ import com.laioffer.tinnews.databinding.FragmentSaveBinding;
 import com.laioffer.tinnews.model.Article;
 import com.laioffer.tinnews.repository.NewsRepository;
 import com.laioffer.tinnews.repository.NewsViewModelFactory;
+import com.laioffer.tinnews.ui.search.SearchFragment;
+import com.laioffer.tinnews.ui.search.SearchFragmentDirections;
 
 public class SaveFragment extends Fragment {
 
@@ -62,7 +64,9 @@ public class SaveFragment extends Fragment {
         savedNewsAdapter.setOnClickListener(new SavedNewsAdapter.onClickListener() {
             @Override
             public void onClick(Article article) {
-                NavHostFragment.findNavController(SaveFragment.this).navigate(R.id.action_title_save_to_detail);
+                SaveFragmentDirections.ActionTitleSaveToDetail actionTitleSaveToDetail = SaveFragmentDirections.actionTitleSaveToDetail();
+                actionTitleSaveToDetail.setArticle(article);
+                NavHostFragment.findNavController(SaveFragment.this).navigate(actionTitleSaveToDetail);
             }
 
             @Override
