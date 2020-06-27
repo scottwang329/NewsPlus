@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:padding="4dp"
             android:text="@string/description"
-            android:textStyle="bold"
+            style="@style/NormalText"
             app:layout_constraintLeft_toLeftOf="@id/author_label"
             app:layout_constraintTop_toBottomOf="@id/author_label" />
 
