@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">NewsPlus</string>
+
+    <string name="title_home">主页</string>
+    <string name="title_save">保存</string>
+    <string name="title_search">搜索</string>
+    <string name="title_detail">全文</string>
+
     <string name="unknown_author">匿名作者</string>
     <string name="description">描述:</string>
     <string name='author'>作者:</string>

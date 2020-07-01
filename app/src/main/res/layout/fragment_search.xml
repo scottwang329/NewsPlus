@@ -18,7 +18,7 @@
         android:id="@+id/search_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Search the topic"
+        android:hint="@string/search_hint"
         android:imeOptions="actionDone"
         android:singleLine="true"
         app:layout_constraintBottom_toBottomOf="@+id/search_icon"
